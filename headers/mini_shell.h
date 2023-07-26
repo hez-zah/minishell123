@@ -95,4 +95,5 @@ void		close_file(t_pip *pip);
 void		free_stack_herdoc(t_limit **limit);
 // void		free_pip(t_pip *pip);
 void		free_stack_pip(t_pip *pip);
+void	free_pip(t_list *pip);
 #endif

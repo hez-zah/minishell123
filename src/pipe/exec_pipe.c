@@ -91,5 +91,4 @@ void	app_redir(t_pip *pip, char **env)
 {
 	init_pip(pip);
 	pip = child_process_pip(pip, env);
-	// printf("soo\n");
 }

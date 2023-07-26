@@ -79,6 +79,7 @@ int	free_pip_arg(char **str)
 		return (0);
 	while (str[i])
 		free(str[i++]);
+	free(str);
 	return (1);
 }
 
@@ -98,18 +99,36 @@ void	free_stack_pip(t_pip *pip)
 	pip = NULL;
 }
 
-void	free_pip(t_pip *pip)
+void	free_pip(t_list *pip)
 {
-	t_pip	*old_pip;
-	t_pip	*new_pip;
+	t_list	*tmp;
 
-	new_pip = pip;
-	while (new_pip)
+	if (pip)
+		return ;
+	while (pip)
 	{
-		old_pip = new_pip;
-		new_pip = new_pip->next_pip;
-		old_pip->next_pip = NULL;
-		free_pip_arg(old_pip->pip_arg);
-		free(old_pip);
+		tmp = pip->next;
+		// free_pip_arg(tmp->pip_arg);
+		free_pip_arg(((t_pipe *)pip->content)->tokens);
+		// free(old_pip);
+		free(pip);
+		pip = tmp;
 	}
+	pip = NULL;
 }
+
+// void	free_pip(t_list *pip)
+// {
+// 	t_list	*old_pip;
+// 	t_list	*new_pip;
+
+// 	new_pip = pip;
+// 	while (new_pip)
+// 	{
+// 		old_pip = new_pip;
+// 		new_pip = new_pip->next;
+// 		old_pip->next = NULL;
+// 		free_pip_arg(((t_pipe *)old_pip->content)->tokens);
+// 		free(old_pip);
+// 	}
+// }

@@ -2,6 +2,16 @@
 
 #include "../headers/minishell.h"
 
+void	del_pipe(void *content)
+{
+	t_pipe	*pipe;
+
+	pipe = (t_pipe *)content;
+	if (pipe->tokens != NULL)
+		free_pip_arg(pipe->tokens);
+	free(pipe);
+}
+
 char	**pip_arg_alloc(char **str1, char **str2)
 {
 	int		index;
@@ -113,13 +123,12 @@ void	ms_line_executer(t_mini *data)
 	new_env = lstenv_to_arrenv(data);
 	pip = pipes_to_lstpip(pipes);
 	ft_lstclear(&data->env, ev_del_keyval);
-	free_pipes(pipes);
+	ft_lstclear(&pipes, del_pipe);
 	herdoc(pip);
 	app_redir(pip, new_env);
 	data->env = ev_init_env(new_env);
 	free_stack_pip(pip);
-	// free_pip(pip);
 	free_pip_arg(new_env);
 	ft_lstclear(&tokens, ms_del_token);
-	// system("leaks minishell");
+	system("leaks minishell");
 }
